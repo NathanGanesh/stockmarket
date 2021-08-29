@@ -1,10 +1,10 @@
-package com.example.stockmarketbackend.utils;
+package com.example.stockmarketbackend.util;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.JWTVerifier;
-import com.example.stockmarketbackend.domain.UserPrincipal;
+import com.example.stockmarketbackend.domain.user.UserPrincipal;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -25,14 +25,13 @@ import static com.example.stockmarketbackend.constant.SecurityConstant.*;
 import static java.util.Arrays.stream;
 
 @Component
-public class JWTTokenProvider {
-
+public class JwtTokenProvider {
     @Value("${jwt.secret}")
     private String secret;
 
     public String generateJwtToken(UserPrincipal userPrincipal) {
         String[] claims = getClaimsFromUser(userPrincipal);
-        return JWT.create().withIssuer(GET_ARRAYS_LLC).withAudience(GET_ARRAYS_ADMINISTRATION)
+        return JWT.create().withIssuer(GET_STOCK_MARKET).withAudience(GET_ARRAYS_ADMINISTRATION)
                 .withIssuedAt(new Date()).withSubject(userPrincipal.getUsername())
                 .withArrayClaim(AUTHORITIES, claims).withExpiresAt(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .sign(HMAC512(secret.getBytes()));
@@ -74,7 +73,7 @@ public class JWTTokenProvider {
         JWTVerifier verifier;
         try {
             Algorithm algorithm = HMAC512(secret);
-            verifier = JWT.require(algorithm).withIssuer(GET_ARRAYS_LLC).build();
+            verifier = JWT.require(algorithm).withIssuer(GET_STOCK_MARKET).build();
         }catch (JWTVerificationException exception) {
             throw new JWTVerificationException(TOKEN_CANNOT_BE_VERIFIED);
         }
@@ -88,4 +87,5 @@ public class JWTTokenProvider {
         }
         return authorities.toArray(new String[0]);
     }
+
 }

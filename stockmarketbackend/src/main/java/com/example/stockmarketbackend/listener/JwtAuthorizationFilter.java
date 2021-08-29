@@ -1,7 +1,6 @@
-package com.example.stockmarketbackend.filter;
+package com.example.stockmarketbackend.listener;
 
-
-import com.example.stockmarketbackend.utils.JWTTokenProvider;
+import com.example.stockmarketbackend.util.JwtTokenProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -12,9 +11,9 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 import java.util.List;
-
 
 import static com.example.stockmarketbackend.constant.SecurityConstant.OPTIONS_HTTP_METHOD;
 import static com.example.stockmarketbackend.constant.SecurityConstant.TOKEN_PREFIX;
@@ -23,9 +22,9 @@ import static org.springframework.http.HttpStatus.OK;
 
 @Component
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
-    private JWTTokenProvider jwtTokenProvider;
+    private JwtTokenProvider jwtTokenProvider;
 
-    public JwtAuthorizationFilter(JWTTokenProvider jwtTokenProvider) {
+    public JwtAuthorizationFilter(JwtTokenProvider jwtTokenProvider) {
         this.jwtTokenProvider = jwtTokenProvider;
     }
 

@@ -1,4 +1,4 @@
-package com.example.stockmarketbackend.exception.domain;
+package com.example.stockmarketbackend.exceptions.domain.user;
 
 public class UsernameExistException extends Exception {
     public UsernameExistException(String message) {

@@ -1,8 +1,9 @@
-package com.example.stockmarketbackend.exception;
+package com.example.stockmarketbackend.exceptions;
+
 
 import com.auth0.jwt.exceptions.TokenExpiredException;
-import com.supportportal.domain.HttpResponse;
-import com.supportportal.exception.domain.*;
+import com.example.stockmarketbackend.domain.HttpResponse;
+import com.example.stockmarketbackend.exceptions.domain.user.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.web.servlet.error.ErrorController;
@@ -19,10 +20,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.persistence.NoResultException;
+
 import java.io.IOException;
 import java.util.Objects;
 
 import static org.springframework.http.HttpStatus.*;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @RestControllerAdvice
 public class ExceptionHandling implements ErrorController {
@@ -81,10 +84,13 @@ public class ExceptionHandling implements ErrorController {
         return createHttpResponse(BAD_REQUEST, exception.getMessage());
     }
 
-//    @ExceptionHandler(NoHandlerFoundException.class)
-//    public ResponseEntity<HttpResponse> noHandlerFoundException(NoHandlerFoundException e) {
-//        return createHttpResponse(BAD_REQUEST, "There is no mapping for this URL");
-//    }
+    @ExceptionHandler(RegisterException.class)
+    public ResponseEntity<HttpResponse> defaultRegisterMailException(UserNotFoundException exception) {
+        return createHttpResponse(BAD_REQUEST, exception.getMessage());
+    }
+
+
+
 
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     public ResponseEntity<HttpResponse> methodNotSupportedException(HttpRequestMethodNotSupportedException exception) {
@@ -126,8 +132,5 @@ public class ExceptionHandling implements ErrorController {
         return createHttpResponse(NOT_FOUND, "There is no mapping for this URL");
     }
 
-    @Override
-    public String getErrorPath() {
-        return ERROR_PATH;
-    }
+
 }

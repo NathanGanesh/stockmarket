@@ -2,9 +2,12 @@
 jwt:
   secret: '[a-zA-Z0-9._]^+$Guidelines89797987forAlphabeticalArraNumeralsandOtherSymbo$'
 
-
 server:
-  port: 8089
+  port: 8079
+  error:
+    path: /error
+#  servlet:
+#    context-path: "/api"
 #  error:
 #    whitelabel:
 #      enabled: false
@@ -21,7 +24,8 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
-  mvc:
-    throw-exception-if-no-handler-found: true
-  resources:
-    add-mappings: false
+#  mvc:
+#    throw-exception-if-no-handler-found: true
+#  web:
+#    resources:
+#      add-mappings: false

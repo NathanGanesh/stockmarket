@@ -1,5 +1,6 @@
-package com.example.stockmarketbackend.domain;
+package com.example.stockmarketbackend.domain.user;
 
+import com.example.stockmarketbackend.domain.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -28,8 +29,9 @@ public class UserPrincipal implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.user.getUsername();
+        return user.getEmail();
     }
+
 
     @Override
     public boolean isAccountNonExpired() {
